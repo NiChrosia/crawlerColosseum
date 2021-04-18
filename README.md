@@ -1,3 +1,6 @@
-# crawler_arena
+# Crawler Colosseum
 
-This is a mindustry gamemode plugin for the crawler arena gamemode - players will fight off waves of crawlers. Before using, take note that the enemies have no pathfinding and will only go to players in a straight line, so use a flat open map, preferably without deepwater. Also make sure that the very middle of the map and map edges are unobstructed for enemies (near edge) and players (near middle) to spawn. If there's any issues with the plugin, try doing `rules add canGameOver false` and `rules add unitCap 100`.
+A mindustry plugin based off of ily246's crawler_arena.  
+
+By default, this requires `crawler-colosseum.msav` in the maps directory, as well as automatically hosting a game upon loading.  
+This behavior can be disabled by running `autohost false` in the console, and to re-enable, `autohost true`.
