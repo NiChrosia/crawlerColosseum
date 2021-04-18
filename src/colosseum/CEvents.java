@@ -76,23 +76,32 @@ public class CEvents {
         Events.on(EventType.ResetEvent.class, e -> {
            CVars.wave = 0;
            CVars.difficulty = 0.1f;
-           CVars.money.forEach(args -> CVars.money.put(args.key, 100f));
+            CVars.money.forEach(args -> {
+                CVars.money.remove(args.key);
+                CVars.money.put(args.key, 100f);
+            });
         });
 
         Events.on(EventType.UnitDestroyEvent.class, e -> {
             UnitType unit = e.unit.type;
 
-            float money = CVars.costs.get(unit.name);
-            CVars.money.forEach(args -> CVars.money.put(args.key, args.value + money));
+            if (e.unit.team != Team.sharded) {
 
-            ItemStack[] items = CVars.itemMap.get(unit);
-            if (items != null) {
-                ItemModule itemm = new ItemModule();
-                for (ItemStack i : items) {
-                    itemm.add(i.item, i.amount);
+                float money = CVars.costs.get(unit.name);
+                CVars.money.forEach(args -> {
+                    CVars.money.remove(args.key);
+                    CVars.money.put(args.key, args.value + money);
+                });
+
+                ItemStack[] items = CVars.itemMap.get(unit);
+                if (items != null) {
+                    ItemModule itemm = new ItemModule();
+                    for (ItemStack i : items) {
+                        itemm.add(i.item, i.amount);
+                    }
+
+                    if (Team.sharded.core() != null) Team.sharded.core().items.add(itemm);
                 }
-
-                if (Team.sharded.core() != null) Team.sharded.core().items.add(itemm);
             }
         });
     }

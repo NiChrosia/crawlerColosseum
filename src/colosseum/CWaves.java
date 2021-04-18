@@ -21,12 +21,12 @@ public class CWaves {
             float newX = Mathf.random(x - range, x + range);
             float newY = Mathf.random(y - range, y + range);
 
-            u.spawn(Team.crux, newX, newY);
+            u.spawn(CVars.enemyTeam, newX, newY);
         });
     }
 
     public static void spawnWave(float difficulty, int wave) {
-        Groups.unit.each(u -> u.team == Team.crux && !CVars.itemMap.containsKey(u.type), Unitc::kill);
+        Groups.unit.each(u -> u.team == CVars.enemyTeam && !CVars.itemMap.containsKey(u.type), Unitc::kill);
 
         float enemyAmount = enemyCalculator(difficulty, wave);
         Seq<Tile> spawnTiles = Vars.spawner.getSpawns();

@@ -133,6 +133,7 @@ public class CCommands {
                         if (floor.liquidDrop != null) {
                             player.unit().kill();
                             player.unit(unit.spawn(player.x, player.y));
+                            CVars.money.remove(player.uuid());
                             CVars.money.put(player.uuid(), money - cost);
                         } else {
                             player.sendMessage("[#" + Color.red + "]Naval units cannot be placed on land.[]");

@@ -5,6 +5,7 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Items;
 import mindustry.content.UnitTypes;
+import mindustry.game.Team;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
 
@@ -146,4 +147,5 @@ public class CVars {
     public static int wave = Vars.state.wave;
     public static float difficulty = 0.1f;
     public static float difficultyMultiplier = 1.1f;
+    public static Team enemyTeam = Team.crux;
 }
