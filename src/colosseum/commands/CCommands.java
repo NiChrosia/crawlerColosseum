@@ -12,6 +12,7 @@ import mindustry.entities.abilities.Ability;
 import mindustry.entities.abilities.ForceFieldAbility;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
+import mindustry.gen.Nulls;
 import mindustry.gen.Player;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
@@ -91,14 +92,14 @@ public class CCommands {
                     "[accent]Info:[]" +
                             "\n\nMoney is gained at the end of every wave, depending on the amount of damage dealt to enemies on that wave. " +
                             "Each health point is equivalent to $1." +
-                            "\nYou will respawn after a wave is over if you die." +
+                            "\nUpgrading to another unit will save your shield." +
                             "\n\n\n[accent]Commands:[]" +
                             "\n\n  [accent]'upgrades':[] Shows all available unit upgrades, and their costs." +
                             "\n\n  [accent]'bal'[]|[accent]'balance':[] Provides your current balance." +
                             "\n\n  [accent]'upgrade':[] Upgrades your current unit to the new unit, if you have enough money to afford it. " +
                             "[acid](not case-sensitive)[]" +
-                            "\n\n  [accent]'abilities:[] Shows all available unit abilities, and their costs.'" +
-                            "\n\n  [accent]'ability:[] Adds the ability, if you can afford it.'" +
+                            "\n\n  [accent]'shieldamount':[] Gets your current amount of shield." +
+                            "\n\n  [accent]'shield':[] Adds x shield to your unit." +
                             "\n\n  [accent]'info':[] This command."
             );
         });
@@ -215,8 +216,12 @@ public class CCommands {
 
                             if (CVars.navalUnits.contains(unit)) {
                                 if (floor.liquidDrop != null || unit.flying) {
+                                    float shield = player.unit().shield;
+
                                     player.unit().kill();
                                     player.unit(unit.spawn(player.x, player.y));
+
+                                    player.unit().shield(shield);
                                     CVars.money.remove(player.uuid());
                                     CVars.money.put(player.uuid(), money - cost);
 
@@ -225,8 +230,12 @@ public class CCommands {
                                     player.sendMessage("[#" + Color.red + "]Naval units cannot be placed on land.[]");
                                 }
                             } else {
+                                float shield = player.unit().shield;
+
                                 player.unit().kill();
                                 player.unit(unit.spawn(player.x, player.y));
+
+                                player.unit().shield(shield);
                                 CVars.money.put(player.uuid(), money - cost);
 
                                 player.sendMessage("[accent]Upgraded to unit [#" + CVars.colorMap.get(unit) + "]" + unitName + "[] for $[sky]" + cost + "[]. Current balance is $[sky]" + CVars.money.get(player.uuid()) + "[].[]");
@@ -255,19 +264,27 @@ public class CCommands {
                 player.unit().shield(player.unit().shield + shieldAmount);
                 player.sendMessage("[accent]Added [sky]" + shieldAmount + "[] shield to your unit.[]");
             } else {
-                player.sendMessage("[#" + Color.red.cpy().shiftSaturation(-0.2f) + "]Cannot afford shield. ($[sky]" + cost + "[] > $[sky]" + CVars.money.get(player.uuid()).intValue() + ")[][]");
+                player.sendMessage("[#" + Color.red.cpy().shiftSaturation(-0.2f) + "]Cannot afford shield. ($[sky]" + cost + "[] > $[sky]" + CVars.money.get(player.uuid()).intValue() + "[])[]");
             }
+        });
+
+        handler.<Player>register("shieldamount", CVars.descriptions.get("shieldamount"), (arg, player) -> {
+            player.sendMessage("[sky]" + (int)player.unit().shield + "[]");
         });
 
         handler.<Player>register("heal", CVars.descriptions.get("heal"), (arg, player) -> {
             float healAmount = player.unit().maxHealth - player.unit().health();
 
-            float cost = healAmount * player.unit().hitSize / 10;
+            float cost = healAmount * (player.unit().hitSize / 10);
 
             if (CVars.money.get(player.uuid()) > cost) {
-                player.unit().heal();
-                player.sendMessage("[accent]Healing unit [sky]" + (int)healAmount + "[] health for $[sky]" + (int)cost + "[]. New balance: $[sky]" + CVars.money.get(player.uuid()) + "[][]");
-                CVars.money.put(player.uuid(), (float)(CVars.money.get(player.uuid()).intValue() - (int)cost));
+                if (!(player.unit() == Nulls.unit)) {
+                    player.unit().heal();
+                    player.sendMessage("[accent]Healing unit [sky]" + (int) healAmount + "[] health for $[sky]" + (int) cost + "[]. New balance: $[sky]" + CVars.money.get(player.uuid()) + "[][]");
+                    CVars.money.put(player.uuid(), (float) (CVars.money.get(player.uuid()).intValue() - (int) cost));
+                } else {
+                    player.sendMessage("[#" + Color.red + "]Cannot heal null unit.");
+                }
             } else {
                 player.sendMessage("[#" + Color.red + "]Cannot afford heal. ($" + (int)cost + " > $" + CVars.money.get(player.uuid()).intValue() + ")[]");
             }

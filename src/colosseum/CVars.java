@@ -19,6 +19,7 @@ public class CVars {
             "upgrade", "Upgrade your current unit into another. Requires the money to do so.",
             "heal", "Heals your unit to full health, for $x price.",
             "shield", "Adds x shield health to your unit.",
+            "shieldamount", "Gets your current amount of shield.",
             "setbalance", "Sets the player's balance to the specified amount.",
             "difficulty", "Returns the current difficulty",
             "setdifficulty", "Sets the difficulty to the specified value.",
