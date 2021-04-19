@@ -2,14 +2,11 @@ package colosseum;
 
 import arc.Core;
 import arc.Events;
-import arc.util.Log;
 import colosseum.ai.ArenaAI;
 import colosseum.ai.SuicideArenaAI;
 import mindustry.Vars;
 import mindustry.content.Blocks;
 import mindustry.content.UnitTypes;
-import mindustry.entities.bullet.ArtilleryBulletType;
-import mindustry.entities.bullet.BombBulletType;
 import mindustry.game.EventType;
 import mindustry.game.Team;
 import mindustry.gen.Building;
@@ -117,13 +114,10 @@ public class CEvents {
             if (e.unit.team != Team.sharded) {
                 float money = CVars.costs.get(unit.name);
 
-                CVars.money.forEach(args -> {
-                    CVars.money.remove(args.key);
-                    CVars.money.put(args.key, args.value + money);
-                });
-
                 ItemStack[] items = CVars.itemMap.get(unit);
                 if (items != null) {
+                    CVars.money.forEach(args -> CVars.money.put(args.key, args.value + money));
+
                     Call.label("+ $[sky]" + money + "[]", 3, e.unit.x, e.unit.y);
 
                     ItemModule itemm = new ItemModule();

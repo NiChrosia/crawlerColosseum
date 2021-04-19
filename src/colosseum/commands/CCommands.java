@@ -1,15 +1,12 @@
 package colosseum.commands;
 
 import arc.Core;
-import arc.struct.Seq;
 import arc.util.Log;
 import colosseum.CVars;
 import arc.graphics.Color;
 import arc.util.CommandHandler;
 import mindustry.Vars;
 import mindustry.ctype.ContentType;
-import mindustry.entities.abilities.Ability;
-import mindustry.entities.abilities.ForceFieldAbility;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Nulls;
@@ -17,10 +14,6 @@ import mindustry.gen.Player;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.world.blocks.environment.Floor;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class CCommands {
     private static String parseUpgrade(String color, String name) {
@@ -40,51 +33,6 @@ public class CCommands {
     private static String parseUpgradeCategory(Color color, String name) {
         return "\n\n[#" + color + "]" + name + ":[]";
     }
-
-    private static String formatAbilityCategory(String color, String string) {
-        return "\n\n[" + color + "]" + string + ":[]";
-     }
-
-    private static String formatAbilityCategory(Color color, String string) {
-        return "\n\n[#" + color + "]" + string + ":[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, int min, int max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, double min, int max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, int min, double max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, double min, double max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, float min, int max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, int min, float max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(String color, String abilityName, float min, float max) {
-        return "\n[" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatAbility(Color color, String abilityName, int min, int max) {
-        return "\n[#" +  color + "]" + abilityName + ":[] [sky]" + min + "[] - [sky]" + max + "[]";
-    }
-
-    private static String formatStatusAbility(String color, String abilityName, String types) {
-        return "\n[" + color + "]" + abilityName + ":[] [sky]" + types + "[]";
-    }
-
 
     public static void loadClient(CommandHandler handler) {
         handler.<Player>register("info", CVars.descriptions.get("info"), (args, player) -> {
