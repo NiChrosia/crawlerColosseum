@@ -1,11 +1,13 @@
 package colosseum;
 
+import arc.graphics.Color;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Items;
 import mindustry.content.UnitTypes;
 import mindustry.game.Team;
+import mindustry.graphics.Pal;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
 
@@ -13,9 +15,14 @@ public class CVars {
     public static final ObjectMap<String, String> descriptions = ObjectMap.of(
             "info", "Provides necessary information about how to play Crawler Colosseum.",
             "upgrades", "Shows all available unit upgrades, and their costs.",
-            "balance", "Provides your currently balance",
-            "bal", "Provides your currently balance",
-            "upgrade", "Upgrade your current unit into another. Requires the money to do so."
+            "balance", "Provides your current balance",
+            "upgrade", "Upgrade your current unit into another. Requires the money to do so.",
+            "heal", "Heals your unit to full health, for $x price.",
+            "shield", "Adds x shield health to your unit.",
+            "setbalance", "Sets the player's balance to the specified amount.",
+            "difficulty", "Returns the current difficulty",
+            "setdifficulty", "Sets the difficulty to the specified value.",
+            "autohost", "Enables or disables autohost."
     );
 
     public static final ObjectMap<String, String> emojis = ObjectMap.of(
@@ -142,10 +149,53 @@ public class CVars {
             )
     );
 
+    public static ObjectMap<UnitType, Color> colorMap = ObjectMap.of(
+            UnitTypes.alpha, Pal.accent,
+            UnitTypes.beta, Pal.accent,
+            UnitTypes.gamma, Pal.accent,
+
+            UnitTypes.dagger, Color.red,
+            UnitTypes.mace, Color.red,
+            UnitTypes.fortress, Color.red,
+            UnitTypes.scepter, Color.red,
+            UnitTypes.reign, Color.red,
+
+            UnitTypes.nova, Pal.heal,
+            UnitTypes.pulsar, Pal.heal,
+            UnitTypes.quasar, Pal.heal,
+            UnitTypes.vela, Pal.heal,
+            UnitTypes.corvus, Pal.heal,
+
+            UnitTypes.crawler, Pal.sap,
+            UnitTypes.atrax, Pal.sap,
+            UnitTypes.spiroct, Pal.sap,
+            UnitTypes.arkyid, Pal.sap,
+            UnitTypes.toxopid, Pal.sap,
+
+            UnitTypes.flare, Color.red,
+            UnitTypes.horizon, Color.red,
+            UnitTypes.zenith, Color.red,
+            UnitTypes.antumbra, Color.red,
+            UnitTypes.eclipse, Color.red,
+
+            UnitTypes.mono, Pal.heal,
+            UnitTypes.poly, Pal.heal,
+            UnitTypes.mega, Pal.heal,
+            UnitTypes.quad, Pal.heal,
+            UnitTypes.oct, Pal.heal,
+
+            UnitTypes.risso, Color.sky,
+            UnitTypes.minke, Color.sky,
+            UnitTypes.bryde, Color.sky,
+            UnitTypes.sei, Color.sky,
+            UnitTypes.omura, Color.sky
+    );
+
     public static ObjectMap<String, Float> money = ObjectMap.of();
     public static ObjectMap<String, UnitType> units = ObjectMap.of();
     public static int wave = Vars.state.wave;
     public static float difficulty = 0.1f;
-    public static float difficultyMultiplier = 1.1f;
+    public static float difficultyMultiplier = 1.35f;
     public static Team enemyTeam = Team.crux;
+    public static final UnitType startingUnit = UnitTypes.dagger;
 }
