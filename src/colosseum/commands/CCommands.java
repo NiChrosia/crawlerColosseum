@@ -159,39 +159,6 @@ public class CCommands {
             );
         });
 
-        String size = "[ [accent]Size[] ]";
-
-        handler.<Player>register("abilities", CVars.descriptions.get("abilities"), (args, player) -> {
-            player.sendMessage("[sky]Displaying ability upgrades.");
-            Call.infoMessage(player.con(), "[accent]Abilities:[]" +
-                    formatAbilityCategory("gold", "ForceField") +
-
-                    formatAbility("accent", "Radius Tiles", 1, 25) +
-                    formatAbility("accent", "Regen", 0.1, 10) +
-                    formatAbility("accent", "Max", 100, 100000) +
-                    formatAbility("accent", "Cooldown Seconds", 10, 0.1) +
-
-                    formatAbilityCategory(Pal.heal, "RepairField") +
-
-
-                    formatAbility("accent", "Range Tiles", 1, 50) +
-                    formatAbility("accent", "Reload Seconds", 10, 0.1) +
-
-                    formatAbilityCategory("gold", "ShieldRegenField") +
-
-                    formatAbility("accent", "Shield per Reload", 10, 1000) +
-                    formatAbility("accent", "Max Shield Health", 1000, 100000) +
-                    formatAbility("accent", "Reload Seconds", 10, 0.1) +
-
-                    formatAbilityCategory("gold", "StatusField") +
-
-                    formatStatusAbility("accent", "Status Effect", "Overclock, Boss") +
-                    formatAbility("accent", "Range Tiles", 1, 50) +
-                    formatAbility("accent", "Reload Seconds", 10, 0.1) +
-                    formatAbility("accent", "Duration Seconds", 1, 120)
-            );
-        });
-
         handler.<Player>register("balance", CVars.descriptions.get("balance"), (args, player) -> {
             player.sendMessage("[accent]Balance:[] $[sky]" + CVars.money.get(player.uuid()) + "[]");
         });
@@ -225,7 +192,7 @@ public class CCommands {
                                     CVars.money.remove(player.uuid());
                                     CVars.money.put(player.uuid(), money - cost);
 
-                                    player.sendMessage("[accent]Upgraded to unit [gold]" + unitName + "[] for $[sky]" + cost + "[]. Current balance is $[sky]" + CVars.money.get(player.uuid()) + "[].[]");
+                                    player.sendMessage("[accent]Upgraded to unit [#" + CVars.colorMap.get(unit) + "]" + unitName + "[] for $[sky]" + cost + "[]. Current balance is $[sky]" + CVars.money.get(player.uuid()) + "[].[]");
                                 } else {
                                     player.sendMessage("[#" + Color.red + "]Naval units cannot be placed on land.[]");
                                 }
