@@ -236,7 +236,7 @@ public class CCommands {
         });
 
         handler.<Player>register("shieldamount", CVars.descriptions.get("shieldamount"), (arg, player) -> {
-            player.sendMessage("[sky]" + (int)player.unit().shield + "[]");
+            player.sendMessage("[accent]Shield Amount:[] [sky]" + (int)player.unit().shield + "[]");
         });
 
         handler.<Player>register("heal", CVars.descriptions.get("heal"), (arg, player) -> {
